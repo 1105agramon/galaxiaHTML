@@ -143,7 +143,7 @@ function createCentralImage(imageURL) {
 }
 
 //  URL de la imagen central (¡Asegúrate que exista en la carpeta 'images'!)
-const centralImage = createCentralImage('images/foto_perla_central.jpg'); 
+const centralImage = createCentralImage('imagenes/IM7.jpg'); 
 galaxyGroup.add(centralImage); 
 // --- FIN: IMAGEN CENTRAL ---
 
