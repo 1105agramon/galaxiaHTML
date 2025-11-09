@@ -30,6 +30,7 @@ controls.target.set(0, 0, 0); // Fija el centro de rotación en el origen
 const galaxyGroup = new THREE.Group();
 scene.add(galaxyGroup);
 
+// --- 🛠️ FUNCIÓN PARA MEZCLAR (SHUFFLE) UN ARRAY ---
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         // Elige un elemento restante al azar
@@ -88,9 +89,10 @@ const phrases = [
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
-shuffleArray(phrases);
+// 🚀 APLICAR LA MEZCLA para que el orden cambie en cada carga
+shuffleArray(phrases); 
 
-// Función que crea una textura de texto usando Canvas 2D
+// Función que crea una textura de texto/emoji usando Canvas 2D
 function createTextTexture(text) {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -98,13 +100,12 @@ function createTextTexture(text) {
     canvas.width = 1024; // Resolución de la textura
     canvas.height = 128;
     context.font = `bold ${fontSize}px Arial`;
-    context.fillStyle = 'rgba(255, 255, 255, 1)';
+    context.fillStyle = 'rgba(255, 255, 255, 1)'; // Color del texto: Blanco
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillText(text, canvas.width / 2, canvas.height / 2);
     return new THREE.CanvasTexture(canvas);
 }
-
 
 
 // Parámetros de la Galaxia
@@ -146,10 +147,14 @@ for (let i = 0; i < phraseCount; i++) {
     galaxyGroup.add(sprite);
 }
 
-// --- 2. CREACIÓN DE ESTRELLAS CERCANAS (Partículas) ---
+// --- 2. CREACIÓN DE ESTRELLAS CERCANAS (Partículas Rosado y Blanco) ---
 const starGeometry = new THREE.BufferGeometry();
 const starCount = 10000;
 const positions = new Float32Array(starCount * 3);
+const colors = new Float32Array(starCount * 3); // Array para los colores por vértice
+
+const colorWhite = new THREE.Color(0xffffff); // Color Blanco
+const colorPink = new THREE.Color(0xFF82F5); // Color Rosado/Magenta
 
 for (let i = 0; i < starCount; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -160,15 +165,24 @@ for (let i = 0; i < starCount; i++) {
     positions[i * 3] = Math.cos(angle) * distance;
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = Math.sin(angle) * distance;
+
+    // Asignar color aleatorio: 50% Rosado, 50% Blanco
+    if (Math.random() < 0.5) {
+        colorWhite.toArray(colors, i * 3);
+    } else {
+        colorPink.toArray(colors, i * 3);
+    }
 }
 
 starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3)); // Añadir atributo de color
+
 const starMaterial = new THREE.PointsMaterial({
-    color: 0xFF82F5, // BLANCO
     size: 0.2, 
     transparent: true, 
     opacity: 0.7, 
-    blending: THREE.AdditiveBlending // Efecto de brillo
+    blending: THREE.AdditiveBlending,
+    vertexColors: true // Habilitar colores por vértice
 });
 
 const stars = new THREE.Points(starGeometry, starMaterial);
@@ -182,7 +196,6 @@ const bgColors = new Float32Array(bgStarCount * 3);
 const twinkleData = [];
 
 for (let i = 0; i < bgStarCount; i++) {
-    // Posición en una esfera muy grande para simular el fondo infinito
     const u = Math.random();
     const v = Math.random();
     const theta = 2 * Math.PI * u;
@@ -199,8 +212,8 @@ for (let i = 0; i < bgStarCount; i++) {
     bgColors.set([color.r, color.g, color.b], i * 3);
 
     twinkleData.push({
-        speed: Math.random() * 0.5 + 0.1, // Velocidad de centelleo
-        offset: Math.random() * 10 // Desplazamiento de fase
+        speed: Math.random() * 0.5 + 0.1, 
+        offset: Math.random() * 10 
     });
 }
 
@@ -209,7 +222,7 @@ bgStarGeometry.setAttribute('color', new THREE.BufferAttribute(bgColors, 3));
 
 const bgStarMaterial = new THREE.PointsMaterial({
     size: 0.8,
-    vertexColors: true, // Importante para usar los colores dinámicos (centelleo)
+    vertexColors: true, 
     blending: THREE.AdditiveBlending,
     transparent: true,
     depthWrite: false
@@ -227,7 +240,6 @@ function onWindowResize() {
     camera.aspect = width / height;
     const isMobile = width < 768 || width < height;
 
-    // Ajuste de cámara y zoom para móviles
     if (isMobile) {
         camera.fov = 90;
         camera.position.set(0, 30, 100);
@@ -238,7 +250,6 @@ function onWindowResize() {
         controls.zoomSpeed = 0.8;
     }
 
-    // Ajuste de escala de las frases para móviles
     galaxyGroup.children.forEach(child => {
         if (child.isPhrase) {
             if (isMobile) {
@@ -253,7 +264,7 @@ function onWindowResize() {
 }
 
 window.addEventListener('resize', onWindowResize);
-onWindowResize(); // Llama a la función al inicio para establecer la posición inicial
+onWindowResize(); 
 
 // --- BUCLE DE ANIMACIÓN ---
 const clock = new THREE.Clock();
@@ -277,13 +288,12 @@ function animate() {
     const colors = backgroundStars.geometry.attributes.color;
     for (let i = 0; i < bgStarCount; i++) {
         const data = twinkleData[i];
-        // Calcula brillo basado en una onda sinoidal
         const brightness = (Math.sin(elapsedTime * data.speed + data.offset) + 1) / 2 * 0.7 + 0.3;
         colors.setXYZ(i, brightness, brightness, brightness);
     }
-    colors.needsUpdate = true; // Indica a Three.js que los colores han cambiado
+    colors.needsUpdate = true; 
 
-    controls.update(); // Actualiza los controles de la cámara
+    controls.update(); 
     renderer.render(scene, camera);
 }
 
