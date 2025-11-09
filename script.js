@@ -153,7 +153,7 @@ for (let i = 0; i < starCount; i++) {
 
 starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 const starMaterial = new THREE.PointsMaterial({
-    color: rgba(255, 130, 245, 0.83), // BLANCO
+    color: 0xFF82F5, // BLANCO
     size: 0.2, 
     transparent: true, 
     opacity: 0.7, 
