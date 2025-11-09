@@ -184,8 +184,8 @@ for (let i = 0; i < phraseCount; i++) {
     sprite.position.set(x, y, z);
     
     // Ajuste de Escala Dinámico
-    if (resource.length > 4 && resource.includes('/')) {
-        sprite.scale.set(20, 20, 1); // Escala para imágenes
+    if (resource.startsWith('imagenes/')) {
+        sprite.scale.set(1.5, 1.5, 1); // Escala para imágenes
     } else if (resource.length <= 2) {
         sprite.scale.set(3, 3, 1); // Escala para emojis
     } else {
