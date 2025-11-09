@@ -87,6 +87,7 @@ const phrases = [
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
+
 // Función que crea una textura de texto usando Canvas 2D
 function createTextTexture(text) {
     const canvas = document.createElement('canvas');
@@ -102,6 +103,13 @@ function createTextTexture(text) {
     return new THREE.CanvasTexture(canvas);
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 // Parámetros de la Galaxia
 const phraseCount = 200;
 const arms = 5; // Número de brazos espirales
@@ -109,6 +117,8 @@ const radius = 80;
 const maxPhraseHeight = 20;
 const maxStarHeight = 40;
 
+
+shuffleArray(phrases);
 // --- 1. CREACIÓN DE FRASES (SPRITES) ---
 for (let i = 0; i < phraseCount; i++) {
     const phraseIndex = i % phrases.length;
