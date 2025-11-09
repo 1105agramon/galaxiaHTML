@@ -46,7 +46,7 @@ const phrases = [
     "Te amo,aunque odies a los hombres",
     "Mi berrinche favorito: el tuyo.(ya parale :v)",
     "Tú eres la galaxia; yo soy tu astronauta.",
-    "Eres más brillante que todas las estrellas juntas.",
+    "Más brillante que todas las estrellas juntas.",
     "¡Deja la guerra y ven a mi!",
     "Te elijo siempre, incluso con tus puños listos.",
     "Perla, mi contadora de amor.",
@@ -173,12 +173,7 @@ for (let i = 0; i < phraseCount; i++) {
 
     sprite.position.set(x, y, z);
     
-    // Ajuste de Escala Dinámico
-    if (resource.length <= 2) {
-        sprite.scale.set(3, 3, 1); // Escala para emojis
-    } else {
-        sprite.scale.set(20, 2.5, 1); // Escala para frases largas
-    }
+    sprite.scale.set(20, 2.5, 1); // Escala para frases largas
 
     galaxyGroup.add(sprite);
 }
