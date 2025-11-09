@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Oculta barras de desplazamiento */
+    background-color: #000000; /* Fondo negro */
+}
+
+/* Asegura que el canvas ocupe todo el viewport */
+#galaxy-canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
