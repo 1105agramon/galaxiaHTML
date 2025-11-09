@@ -71,19 +71,10 @@ const phrases = [
     "Tu berrinche y enojos es mi recordatorio de hacerte caso.",
     "En cada 20, un nuevo capítulo.",
     "Perla, eres la mejor parte de ser yo.",
-    // 🪐 Espacio y Galaxia
     "🪐", "🚀", "🌌", "🌠", "✨", "🌟", "💫", "☀️", "🌕", "🌑", "☄️", "🌍", 
-    
-    // ❤️ Amor y Romanticismo para Perla
     "💖", "❤️", "🥰", "😍", "😘", "💋", "💘", "🔥", "💜", "♾️", "💍", "👩‍❤️‍💋‍👨", 
-    
-    // 🌷 Gustos y Anécdotas de Perla
     "🌷", "📚", "🪄", "💰", "📈", "🔢", "👑", "😈", "🌶️", "🍬", "🎉", "🗓️", 
-    
-    // 😊 Carácter y Bromas
     "😂", "🥊", "😭", "😊", "🤫", "😜", "🙈", "👂", "💡", "🧠", "👸",
-    
-    // 🎨 Variados y Complementarios
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
@@ -168,8 +159,8 @@ for (let i = 0; i < starCount; i++) {
 
 starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 const starMaterial = new THREE.PointsMaterial({
-    color: 0xffffff, // BLANCO
-    size: 0.3, 
+    color: rgba(255, 130, 245, 0.83), // BLANCO
+    size: 0.2, 
     transparent: true, 
     opacity: 0.7, 
     blending: THREE.AdditiveBlending // Efecto de brillo
