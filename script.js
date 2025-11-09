@@ -30,6 +30,16 @@ controls.target.set(0, 0, 0); // Fija el centro de rotación en el origen
 const galaxyGroup = new THREE.Group();
 scene.add(galaxyGroup);
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        // Elige un elemento restante al azar
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Intercambia el elemento actual con el elegido (swap)
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 // Lista de frases a usar con detalles personales de Perla
 const phrases = [
     "Perla, eres mi planeta favorito.",
@@ -78,6 +88,7 @@ const phrases = [
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
+shuffleArray(phrases);
 
 // Función que crea una textura de texto usando Canvas 2D
 function createTextTexture(text) {
