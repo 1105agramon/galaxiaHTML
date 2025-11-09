@@ -83,15 +83,15 @@ const phrases = [
     "😂", "🥊", "😭", "😊", "🤫", "😜", "🙈", "👂", "💡", "🧠", "👸",
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂",
     // ⬅️ Agrega las rutas a tus imágenes aquí (Ejemplos):
-    "images/IM1.jpg", 
-    "images/IM2.jpg", 
-    "images/IM3.jpg", 
-    "images/IM4.jpg", 
-    "images/IM5.jpg", 
-    "images/IM6.jpg", 
-    "images/IM7.jpg", 
-    "images/IM8.jpg", 
-    "images/IM9.jpg"
+    "imagenes/IM1.jpg", 
+    "imagenes/IM2.jpg", 
+    "imagenes/IM3.jpg", 
+    "imagenes/IM4.jpg", 
+    "imagenes/IM5.jpg", 
+    "imagenes/IM6.jpg", 
+    "imagenes/IM7.jpg", 
+    "imagenes/IM8.jpg", 
+    "imagenes/IM9.jpg"
 ];
 
 // Aplicar la mezcla
@@ -187,7 +187,7 @@ for (let i = 0; i < phraseCount; i++) {
     if (resource.length > 4 && resource.includes('/')) {
         sprite.scale.set(5, 5, 1); // Escala para imágenes
     } else if (resource.length <= 2) {
-        sprite.scale.set(5, 5, 1); // Escala para emojis
+        sprite.scale.set(3, 3, 1); // Escala para emojis
     } else {
         sprite.scale.set(20, 2.5, 1); // Escala para frases largas
     }
