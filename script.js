@@ -81,17 +81,7 @@ const phrases = [
     "💖", "❤️", "🥰", "😍", "😘", "💋", "💘", "🔥", "💜", "♾️", "💍", "👩‍❤️‍💋‍👨", 
     "🌷", "📚", "🪄", "💰", "📈", "🔢", "👑", "😈", "🌶️", "🍬", "🎉", "🗓️", 
     "😂", "🥊", "😭", "😊", "🤫", "😜", "🙈", "👂", "💡", "🧠", "👸",
-    "🖼️", "🎶", "🎁", "💯", "🥂", "🎂",
-    // ⬅️ Agrega las rutas a tus imágenes aquí (Ejemplos):
-    "imagenes/IM1.jpg", 
-    "imagenes/IM2.jpg", 
-    "imagenes/IM3.jpg", 
-    "imagenes/IM4.jpg", 
-    "imagenes/IM5.jpg", 
-    "imagenes/IM6.jpg", 
-    "imagenes/IM7.jpg", 
-    "imagenes/IM8.jpg", 
-    "imagenes/IM9.jpg"
+    "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
 // Aplicar la mezcla
@@ -184,9 +174,7 @@ for (let i = 0; i < phraseCount; i++) {
     sprite.position.set(x, y, z);
     
     // Ajuste de Escala Dinámico
-    if (resource.startsWith('imagenes/')) {
-        sprite.scale.set(1.5, 1.5, 1); // Escala para imágenes
-    } else if (resource.length <= 2) {
+    if (resource.length <= 2) {
         sprite.scale.set(3, 3, 1); // Escala para emojis
     } else {
         sprite.scale.set(20, 2.5, 1); // Escala para frases largas
