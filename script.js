@@ -47,7 +47,7 @@ function createTextTexture(text) {
     canvas.width = 1024; // Resolución de la textura
     canvas.height = 128;
     context.font = `bold ${fontSize}px Arial`;
-    context.fillStyle = 'rgba(255, 255, 255, 0.67)';
+    context.fillStyle = 'rgba(148, 0, 0, 1)';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillText(text, canvas.width / 2, canvas.height / 2);
