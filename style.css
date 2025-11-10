@@ -10,3 +10,38 @@ body {
     width: 100vw;
     height: 100vh;
 }
+
+
+/* --- ESTILOS DEL BOTÓN --- */
+#Cancion {
+    /* Fija la posición en la ventana (no se mueve al hacer scroll) */
+    position: fixed; 
+    
+    /* Posiciona en la esquina inferior izquierda */
+    bottom: 20px;
+    left: 20px;
+    
+    /* Estilo para que sea visible y atractivo */
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff; 
+    background-color: #ff82f5; /* Rosa de la galaxia */
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 130, 245, 0.6); /* Sombra rosada */
+    transition: all 0.2s ease;
+    z-index: 1000; /* Asegura que esté por encima del canvas */
+}
+
+#Cancion:hover {
+    background-color: #ffbaf9;
+    color: #000000;
+    box-shadow: 0 6px 20px rgba(255, 186, 249, 0.8);
+    transform: translateY(-2px);
+}
+
+#Cancion:active {
+    transform: translateY(0);
+}
