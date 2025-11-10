@@ -142,7 +142,7 @@ for (let i = 0; i < phraseCount; i++) {
     const y = (Math.random() - 0.5) * maxPhraseHeight * thicknessFactor;
 
     sprite.position.set(x, y, z);
-    sprite.scale.set(20, 3.5, 1); // Escala para que el texto sea visible
+    sprite.scale.set(15, 3.5, 1); // Escala para que el texto sea visible
 
     galaxyGroup.add(sprite);
 }
