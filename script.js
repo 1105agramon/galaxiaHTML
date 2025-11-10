@@ -44,6 +44,7 @@ function shuffleArray(array) {
 // 📋 Lista de frases a usar (PEGA AQUÍ TU LISTA COMPLETA DE 85 ELEMENTOS)
 const phrases = [
     "Eres mi genio contable.",
+    "Cachonda :v jajaja",
     "Eres mi tulipán espacial.",
     "Universo y tú: mi obsesión.",
     "Perla, te elijo siempre.",
@@ -84,14 +85,12 @@ const phrases = [
     "Deja de picarme la cola :v",
     "Perla, eres mi estrella.",
     "👩‍❤️‍💋‍👨", "💋", "👑", "🔥", 
-    "🌷", "😈", "🥳", "🌍", "💍", 
-    "📈", "😊", "🌌", "🎉", "🍬", 
+    "🌷", "😈", "🥳", "🌍", 
+    "📈", "😊", "🎉", "🍬", 
     "😂", "❤️", "📚", "💯", "🥂", 
-    "🤫", "🎁", "🪄", "💡", "💰", 
-    "😭", "👸", "🧠", "🥊", "🚀", 
-    "🎵", "🙈", "👂", "💘", "✨", 
-    "💖", "💜", "🗓️", "🥵", "🎂", 
-    "🔢", "🪐", "🌟", "💫", "☀️", 
+    "🤫", "🎁", "🪄", "💰", "👸", "🧠", "🚀", 
+    "🎵", "🙈", "💘", "✨", 
+    "💖", "💜", "🗓️", "🥵", "🎂", "🪐", "🌟", "💫", "☀️", 
     "🌕", "🌑", "☄️", "🥰", "😍", 
     "😘", "♾️", "🌠", "😜", 
 ];
