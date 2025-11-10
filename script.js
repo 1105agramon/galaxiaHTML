@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
-const textureLoader = new THREE.TextureLoader(); // Cargador de imágenes
 
 // Configuración inicial de la cámara
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -21,12 +20,12 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.screenSpacePanning = false;
-controls.minDistance = 10;
-controls.maxDistance = 200;
+controls.minDistance = 10; // Zoom mínimo
+controls.maxDistance = 200; // Zoom máximo
 controls.zoomSpeed = 0.8;
 
 const panLimit = 40;
-controls.target.set(0, 0, 0);
+controls.target.set(0, 0, 0); // Fija el centro de rotación en el origen
 
 const galaxyGroup = new THREE.Group();
 scene.add(galaxyGroup);
@@ -34,19 +33,24 @@ scene.add(galaxyGroup);
 // --- 🛠️ FUNCIÓN PARA MEZCLAR (SHUFFLE) UN ARRAY ---
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
+        // Elige un elemento restante al azar
         const j = Math.floor(Math.random() * (i + 1));
+        
+        // Intercambia el elemento actual con el elegido (swap)
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
 // 📋 Lista de frases a usar (PEGA AQUÍ TU LISTA COMPLETA DE 85 ELEMENTOS)
 const phrases = [
-    "Mi planeta favorita (TU).",
+    "Perla, eres mi planeta favorito.",
+    "Eres mi genio contable y mi fantasía",
     "Hasta tu enojo es mi constelación.",
-    "Te amo,aunque odies a los hombres",
+    "Mi amor es dulce como tu Lucas Muecas.",
+    "Perla, te amo, ¡aunque odies a los hombres!",
     "Mi berrinche favorito: el tuyo.(ya parale :v)",
     "Tú eres la galaxia; yo soy tu astronauta.",
-    "Más brillante que todas las estrellas juntas.",
+    "Eres más brillante que todas las estrellas juntas.",
     "¡Deja la guerra y ven a mi!",
     "Te elijo siempre, incluso con tus puños listos.",
     "Perla, mi contadora de amor.",
@@ -67,7 +71,7 @@ const phrases = [
     "Tu 'odio' es mi amor más intenso.",
     "¡Diego te manda saludos! (Es broma, te amo xd).",
     "Por ti soy sensible y muy feliz.",
-    "El 20 ¿Será la velocidad de la luz?",
+    "El 20 siempre llega rápido. ¿Será la velocidad de la luz?",
     "Mi contadora personal de sueños cumplidos.",
     "Eres tan dulce y picante como el Lucas.",
     "Hasta en la galaxia, eres la más inteligente.",
@@ -75,119 +79,55 @@ const phrases = [
     "Mi sensibilidad es tu superpoder.",
     "Mi chica de los números, mi mundo.",
     "Perla, siempre ganas las peleas, lo admito.",
+    "Tu berrinche y enojos es mi recordatorio de hacerte caso.",
     "En cada 20, un nuevo capítulo.",
     "Perla, eres la mejor parte de ser yo.",
-    "🪐", 
-    "🚀", 
-    "🌌", 
-    "🌠", 
-    "✨", 
-    "🌟", 
-    "💫", 
-    "☀️", 
-    "🌕", 
-    "🌑", 
-    "☄️", 
-    "🌍", 
-    "💖", 
-    "❤️", 
-    "🥰", 
-    "😍", 
-    "😘", 
-    "💋", 
-    "💘", 
-    "🔥", 
-    "💜", 
-    "👩‍❤️‍💋‍👨", 
-    "🌷", 
-    "📚", 
-    "💰", 
-    "📈",  
-    "👑", 
-    "😈", 
-    "🌶️", 
-    "🍬", 
-    "🎉", 
-    "🗓️", 
+    "🪐", "🚀", "🌌", "🌠", "✨", "🌟", "💫", "☀️", "🌕", "🌑", "☄️", "🌍", 
+    "💖", "❤️", "🥰", "😍", "😘", "💋", "💘", "🔥", "💜", "♾️", "💍", "👩‍❤️‍💋‍👨", 
+    "🌷", "📚", "🪄", "💰", "📈", "🔢", "👑", "😈", "🌶️", "🍬", "🎉", "🗓️", 
     "😂", "🥊", "😭", "😊", "🤫", "😜", "🙈", "👂", "💡", "🧠", "👸",
-    
     "🖼️", "🎶", "🎁", "💯", "🥂", "🎂"
 ];
 
-// Aplicar la mezcla
+// 🚀 APLICAR LA MEZCLA para que el orden cambie en cada carga
 shuffleArray(phrases); 
 
-// Función Universal: Crea textura de texto/emoji (Canvas) o carga imagen (TextureLoader)
-function createTexture(resource) {
-    if (resource.length > 4 && resource.includes('/')) {
-        // Es una Imagen (asume que recursos largos con '/' son URLs/rutas)
-        return textureLoader.load(resource);
-    } else {
-        // Es Texto o Emoji (Crea textura con Canvas)
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const isEmoji = resource.length <= 2;
-        const fontSize = isEmoji ? 100 : 48;
-        canvas.width = isEmoji ? 128 : 1024;
-        canvas.height = 128;
-        context.font = `bold ${fontSize}px Arial`;
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.fillText(resource, canvas.width / 2, canvas.height / 2);
-        return new THREE.CanvasTexture(canvas);
-    }
+// Función que crea una textura de texto/emoji usando Canvas 2D
+function createTextTexture(text) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const fontSize = 48;
+    canvas.width = 1024; // Resolución de la textura
+    canvas.height = 128;
+    context.font = `bold ${fontSize}px Arial`;
+    context.fillStyle = 'rgba(255, 255, 255, 1)'; // Color del texto: Blanco
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(text, canvas.width / 2, canvas.height / 2);
+    return new THREE.CanvasTexture(canvas);
 }
 
-// --- 4. IMAGEN CENTRAL DE PERLA ---
-function createCentralImage(imageURL) {
-    const geometry = new THREE.PlaneGeometry(1, 1);
-    
-    // Cargar la textura y ajustar la escala al cargar
-    const texture = textureLoader.load(imageURL, (tex) => {
-        const aspectRatio = tex.image.width / tex.image.height;
-        plane.scale.set(15 * aspectRatio, 15, 1); 
-    });
-
-    const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        transparent: true,
-        side: THREE.DoubleSide
-    });
-
-    const plane = new THREE.Mesh(geometry, material);
-    plane.position.set(0, 0, 0); 
-    plane.scale.set(15, 15, 1); // Escala inicial
-
-    return plane;
-}
-
-//  URL de la imagen central (¡Asegúrate que exista en la carpeta 'images'!)
-const centralImage = createCentralImage('imagenes/IM7.jpg'); 
-galaxyGroup.add(centralImage); 
-// --- FIN: IMAGEN CENTRAL ---
 
 // Parámetros de la Galaxia
 const phraseCount = 200;
-const arms = 5; 
+const arms = 5; // Número de brazos espirales
 const radius = 80;
 const maxPhraseHeight = 20;
 const maxStarHeight = 40;
 
 
-// --- 1. CREACIÓN DE FRASES, EMOJIS e IMÁGENES (SPRITES) ---
+// --- 1. CREACIÓN DE FRASES (SPRITES) ---
 for (let i = 0; i < phraseCount; i++) {
     const phraseIndex = i % phrases.length;
-    const resource = phrases[phraseIndex];
-    
-    const spriteTexture = createTexture(resource); 
+    const textTexture = createTextTexture(phrases[phraseIndex]);
 
     const material = new THREE.SpriteMaterial({
-        map: spriteTexture, transparent: true, opacity: 0.8, depthWrite: false
+        map: textTexture, transparent: true, opacity: 0.8, depthWrite: false
     });
 
     const sprite = new THREE.Sprite(material);
-    sprite.isPhrase = true; 
+
+    sprite.isPhrase = true; // Etiqueta para diferenciarlo de las estrellas
 
     // Posicionamiento en forma de espiral
     const angle = (i % (phraseCount / arms)) * (Math.PI * 2 / (phraseCount / arms));
@@ -202,8 +142,7 @@ for (let i = 0; i < phraseCount; i++) {
     const y = (Math.random() - 0.5) * maxPhraseHeight * thicknessFactor;
 
     sprite.position.set(x, y, z);
-    
-    sprite.scale.set(20, 2.5, 1); // Escala para frases largas
+    sprite.scale.set(20, 2.5, 1); // Escala para que el texto sea visible
 
     galaxyGroup.add(sprite);
 }
@@ -212,10 +151,10 @@ for (let i = 0; i < phraseCount; i++) {
 const starGeometry = new THREE.BufferGeometry();
 const starCount = 10000;
 const positions = new Float32Array(starCount * 3);
-const colors = new Float32Array(starCount * 3); 
+const colors = new Float32Array(starCount * 3); // Array para los colores por vértice
 
-const colorWhite = new THREE.Color(0xffffff); 
-const colorPink = new THREE.Color(0xFF82F5); 
+const colorWhite = new THREE.Color(0xffffff); // Color Blanco
+const colorPink = new THREE.Color(0xFF82F5); // Color Rosado/Magenta
 
 for (let i = 0; i < starCount; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -227,7 +166,7 @@ for (let i = 0; i < starCount; i++) {
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = Math.sin(angle) * distance;
 
-    // Asignar color aleatorio
+    // Asignar color aleatorio: 50% Rosado, 50% Blanco
     if (Math.random() < 0.5) {
         colorWhite.toArray(colors, i * 3);
     } else {
@@ -236,14 +175,14 @@ for (let i = 0; i < starCount; i++) {
 }
 
 starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3)); // Añadir atributo de color
 
 const starMaterial = new THREE.PointsMaterial({
     size: 0.2, 
     transparent: true, 
     opacity: 0.7, 
     blending: THREE.AdditiveBlending,
-    vertexColors: true 
+    vertexColors: true // Habilitar colores por vértice
 });
 
 const stars = new THREE.Points(starGeometry, starMaterial);
@@ -311,7 +250,6 @@ function onWindowResize() {
         controls.zoomSpeed = 0.8;
     }
 
-    // Ajuste de escala de las frases para móviles
     galaxyGroup.children.forEach(child => {
         if (child.isPhrase) {
             if (isMobile) {
